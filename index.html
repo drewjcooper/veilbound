@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10151b">
+    <meta name="description" content="A two-player fantasy board game of shifting light and arena duels.">
+    <title>Veilbound — a game of shifting light</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="Veilbound home">
+          <span class="wordmark-mark" aria-hidden="true">✳</span>
+          <span>VEILBOUND</span>
+        </a>
+        <div class="topbar-note"><span class="status-dot"></span> LOCAL DUEL · 2 PLAYERS</div>
+        <button class="reset-button" id="reset-game" type="button">New game <span aria-hidden="true">↻</span></button>
+      </header>
+
+      <main class="game-layout">
+        <section class="game-column" aria-label="Game board">
+          <div class="intro-row">
+            <div>
+              <p class="eyebrow">A STRATEGY GAME FOR TWO</p>
+              <h1>Hold the <span>Veil.</span></h1>
+              <p class="intro-copy">Command two rival courts. When forces meet, settle the clash in the arena.</p>
+            </div>
+            <div class="round-chip"><span class="round-chip-icon">◷</span><span id="round-label">ROUND 01</span></div>
+          </div>
+
+          <div class="board-wrap">
+            <div class="board-coordinates board-ranks" aria-hidden="true">
+              <span>8</span><span>7</span><span>6</span><span>5</span>
+              <span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+            <div class="board-coordinates board-files" aria-hidden="true">
+              <span>a</span><span>b</span><span>c</span><span>d</span>
+              <span>e</span><span>f</span><span>g</span><span>h</span>
+            </div>
+            <div id="board" class="board" role="grid" aria-label="Veilbound game board"></div>
+          </div>
+          <div class="board-legend">
+            <span><i class="legend-dot move-dot"></i> Move</span>
+            <span><i class="legend-dot clash-dot"></i> Challenge</span>
+            <span class="legend-hint">Select a piece, then choose a lit square.</span>
+          </div>
+        </section>
+
+        <aside class="side-column" aria-label="Match information">
+          <section class="turn-card">
+            <div class="card-label"><span>NOW PLAYING</span><span id="turn-number">MOVE 01</span></div>
+            <div class="active-side">
+              <div id="active-sigil" class="active-sigil ember-sigil">✦</div>
+              <div>
+                <p class="active-name" id="active-name">The Ember Court</p>
+                <p class="active-caption" id="active-caption">Your move · Sunward</p>
+              </div>
+              <span class="turn-indicator" aria-hidden="true"></span>
+            </div>
+            <p id="game-message" class="game-message" aria-live="polite">Choose a piece to see its paths.</p>
+            <button id="pass-turn" class="pass-button" type="button" hidden>Pass turn <span aria-hidden="true">→</span></button>
+          </section>
+
+          <section class="veil-card">
+            <div class="veil-heading">
+              <div>
+                <p class="eyebrow">THE VEIL</p>
+                <h2 id="phase-name">Sunward</h2>
+              </div>
+              <div id="phase-symbol" class="phase-symbol sun-symbol" aria-hidden="true">☼</div>
+            </div>
+            <div class="phase-track" aria-label="Sunward, Moonward, Eclipse">
+              <span class="phase-node active" data-phase-node="sun"></span>
+              <span class="phase-connector"></span>
+              <span class="phase-node" data-phase-node="moon"></span>
+              <span class="phase-connector"></span>
+              <span class="phase-node" data-phase-node="eclipse"></span>
+            </div>
+            <p id="phase-detail" class="phase-detail">Ember strikes burn brighter.</p>
+          </section>
+
+          <section class="forces-card">
+            <div class="section-heading">
+              <p class="eyebrow">THE FORCES</p>
+              <span class="unit-count" id="unit-count">12 pieces</span>
+            </div>
+            <div id="force-rosters" class="force-rosters"></div>
+          </section>
+
+          <footer class="side-footer">
+            <span>THE CROWN IS YOUR LAST LIGHT.</span>
+            <a href="README.md">How to play <span aria-hidden="true">↗</span></a>
+          </footer>
+        </aside>
+      </main>
+    </div>
+
+    <div id="battle-modal" class="battle-backdrop" hidden>
+      <section class="battle-panel" role="dialog" aria-modal="true" aria-labelledby="battle-title">
+        <p class="eyebrow">A CHALLENGE AT THE VEIL</p>
+        <h2 id="battle-title">Steel meets starlight.</h2>
+        <p id="battle-round" class="battle-round">ARENA ROUND 01</p>
+        <div id="arena" class="arena"></div>
+        <p id="battle-prompt" class="battle-prompt" aria-live="polite"></p>
+        <div id="battle-actions" class="battle-actions">
+          <button class="action-button strike-action" data-action="strike" type="button"><span>✳</span><strong>Strike</strong><small>Deal a mighty blow</small></button>
+          <button class="action-button guard-action" data-action="guard" type="button"><span>⬡</span><strong>Guard</strong><small>Turn a blow aside</small></button>
+          <button class="action-button focus-action" data-action="focus" type="button"><span>◌</span><strong>Focus</strong><small>Heal and charge a strike</small></button>
+        </div>
+        <button id="pass-device" class="pass-device" type="button" hidden>Pass to the other player <span aria-hidden="true">→</span></button>
+        <p class="battle-footnote">Guard blunts strikes and counters. Focus heals unless struck. A charged strike hits harder.</p>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
